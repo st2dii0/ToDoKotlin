@@ -43,10 +43,10 @@ class TaskListFragment : Fragment() {
             taskList.add(newTask)
             taskListAdapter.notifyDataSetChanged()
 
-            taskListAdapter.onDeleteClickListener = { task ->
-                taskList.remove(task)
-                taskListAdapter.notifyDataSetChanged()
-            }
+        }
+        taskListAdapter.onDeleteClickListener = { task ->
+            taskList.remove(task)
+            taskListAdapter.notifyDataSetChanged()
         }
     }
 }
