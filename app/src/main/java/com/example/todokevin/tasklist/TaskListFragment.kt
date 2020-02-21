@@ -62,8 +62,6 @@ class TaskListFragment : Fragment() {
             text_view.text = "${userInfo.firstName} ${userInfo.lastName}"
             tasksRepository.refresh()
         }
-        // Suppression dans onDestroy():
-        //coroutineScope.cancel()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -71,7 +69,9 @@ class TaskListFragment : Fragment() {
         if (requestCode == ADD_TASK_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 var reply = data!!.getSerializableExtra(TaskActivity.TASK_EXTRA_KEY) as Task
-                tasks.add(reply)
+                lifecycleScope.launch {
+                    tasksRepository.createTask(reply)
+                }
             }
         } else if (requestCode == UPDATE_TASK_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {

@@ -28,4 +28,19 @@ class TasksRepository {
             _taskList.value = editableList
         }
     }
+
+    suspend fun createTask(task: Task): Task? {
+        val tasksResponse = taskWebService.createTask(task)
+        if(tasksResponse.isSuccessful){
+            return tasksResponse.body()
+        }
+        return null
+    }
+
+    suspend fun deleteTask(task: Task){
+        val tasksResponse = taskWebService.deleteTask(task.id)
+        if (tasksResponse.isSuccessful){
+            
+        }
+    }
 }
