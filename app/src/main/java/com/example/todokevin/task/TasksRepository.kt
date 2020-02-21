@@ -1,5 +1,6 @@
 package com.example.todokevin.task
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.todokevin.network.Api
@@ -37,10 +38,8 @@ class TasksRepository {
         return null
     }
 
-    suspend fun deleteTask(task: Task){
+    suspend fun deleteTask(task: Task): Boolean {
         val tasksResponse = taskWebService.deleteTask(task.id)
-        if (tasksResponse.isSuccessful){
-            
-        }
+        return tasksResponse.isSuccessful
     }
 }

@@ -49,10 +49,10 @@ class TaskListFragment : Fragment() {
             val intent = Intent(activity, TaskActivity::class.java)
             startActivityForResult(intent, ADD_TASK_REQUEST_CODE)
         }
-        taskListAdapter.onDeleteClickListener = { task ->
+        /*taskListAdapter.onDeleteClickListener = { task ->
             tasks.remove(task)
             taskListAdapter.notifyDataSetChanged()
-        }
+        }*/
     }
 
     override fun onResume() {
@@ -81,10 +81,19 @@ class TaskListFragment : Fragment() {
                 }
             }
         }
+        else if(requestCode == DELETE_TASK_REQUEST_CODE) {
+            if (resultCode == RESULT_OK){
+                var reply = data!!.getSerializableExtra(TaskActivity.TASK_EXTRA_KEY) as Task
+                lifecycleScope.launch {
+                    tasksRepository.deleteTask(reply)
+                }
+            }
+        }
     }
 
     companion object {
         const val ADD_TASK_REQUEST_CODE = 666
         const val UPDATE_TASK_REQUEST_CODE = 777
+        const val DELETE_TASK_REQUEST_CODE = 888
     }
 }
